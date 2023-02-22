@@ -68,9 +68,9 @@ import java.util.Scanner;
 
     class EncoderFactory {
         public IEncoder create(String alg) {
-            alg = alg.toUpperCase();
+            String algorithm = alg.toUpperCase();
 
-            return switch (alg) {
+            return switch (algorithm) {
                 case "SHIFT" -> new ShiftCipher();
                 case "UNICODE" -> new UnicodeCipher();
                 default -> throw new IllegalStateException("Unexpected value: " + alg);
@@ -112,7 +112,9 @@ import java.util.Scanner;
 
             if (!this.inFile.isBlank()) {
                 try (Scanner scanner = new Scanner(new File(this.inFile))) {
-                    this.inFileData = scanner.nextLine();
+                    while(scanner.hasNextLine()) {
+                        this.inFileData = scanner.nextLine();
+                    }
                 } catch (FileNotFoundException e) {
                     System.out.println("File not found");
                 }
