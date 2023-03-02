@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
     interface IEncoder {
@@ -85,7 +87,7 @@ import java.util.Scanner;
         private String data = "";
         private int key = 0;
         private String inFile = "";
-        private String inFileData = "";
+        private List<String> inFileData = new ArrayList<>();
         private String outFile = "";
         private String output;
 
@@ -111,16 +113,15 @@ import java.util.Scanner;
         private void inputInFile() {
 
             if (!this.inFile.isBlank()) {
-                try (Scanner scanner = new Scanner(new File(this.inFile))) {
+                try (Scanner scanner = new Scanner(new File(inFile))) {
                     while(scanner.hasNextLine()) {
-                        this.inFileData = scanner.nextLine();
+                        inFileData.add(scanner.nextLine());
                     }
                 } catch (FileNotFoundException e) {
                     System.out.println("File not found");
                 }
             }
-
-            this.input = this.data.equals("") ? inFileData : data;
+            input = data.equals("") ? inFileData.toString() : data;
         }
 
         private void encodeAndOutput() {
